@@ -9,7 +9,10 @@ public class Main {
         long start = 0;
         long end = 0;
 
+
+
         CreateString createString = new CreateString(27);
+
         File file = new File("D:\\0\\byte.txt");
         File file2 = new File("D:\\0\\char.txt");
         boolean isMakeDir = true;
@@ -121,7 +124,45 @@ public class Main {
 
     }
 
+    public static String bytetoString(byte[] b){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (byte e:b){
+            stringBuilder.append(e);
+        }
+        return stringBuilder.toString();
+    }
 
+    public static byte[] objectToByteArray(Object obj) {
+        byte[] bytes = null;
+        ByteArrayOutputStream byteArrayOutputStream = null;
+        ObjectOutputStream objectOutputStream = null;
+        try {
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(obj);
+            objectOutputStream.flush();
+            bytes = byteArrayOutputStream.toByteArray();
 
-    
+        } catch (IOException e) {
+            System.err.println("objectToByteArray failed, " + e);
+        } finally {
+            if (objectOutputStream != null) {
+                try {
+                    objectOutputStream.close();
+                } catch (IOException e) {
+                    System.err.println("close objectOutputStream failed, " + e);
+                }
+            }
+            if (byteArrayOutputStream != null) {
+                try {
+                    byteArrayOutputStream.close();
+                } catch (IOException e) {
+                    System.err.println("close byteArrayOutputStream failed, " + e);
+                }
+            }
+
+        }
+        return bytes;
+    }
+
 }
